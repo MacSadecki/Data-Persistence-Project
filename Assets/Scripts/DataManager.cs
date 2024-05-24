@@ -41,9 +41,9 @@ public class DataManager : MonoBehaviour
         playerName = name;
     }
 
-    public void SetHighScore(string name, int value)
+    public void SetHighScore(int value)
     {
-        highScoreName = name;
+        highScoreName = playerName;
         highScoreValue = value;
         SaveScore();
     }

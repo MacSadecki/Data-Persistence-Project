@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    public Text highScoreText;
     public Text ScoreText;
     public GameObject GameOverText;
     private DataManager dataManager;
@@ -25,6 +27,8 @@ public class MainManager : MonoBehaviour
     {
         dataManager = DataManager.instance;
         Debug.Log(dataManager.playerName);
+
+        UpdateUI();
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -75,7 +79,22 @@ public class MainManager : MonoBehaviour
     public void GameOver()
     {
         m_GameOver = true;
+        CheckHighScore();        
         GameOverText.SetActive(true);
     }
-    
+
+    private void CheckHighScore()
+    {
+        if (m_Points > dataManager.highScoreValue)
+        {
+            dataManager.SetHighScore(m_Points);
+            UpdateUI();
+        }
+    }
+
+    public void UpdateUI()
+    {
+        highScoreText.text = "Best Score: " + dataManager.highScoreName + " : " + dataManager.highScoreValue;
+    }
+
 }
